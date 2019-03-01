@@ -1,0 +1,87 @@
+<div class="pad-wrap">
+  <div class="chk-block">
+   
+    <div class="chk-block-content">
+        <form [formGroup]="infosForm">
+            <div class="form-group row">
+                <label for="text-input" class="col-12 col-md-2 col-xl-2 col-form-label">Numéro de contrat</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="text"  formControlName="contractCode" [ngModel]="contract.code" id="text-input"  disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="search-input" class="col-12 col-md-2 col-xl-2 col-form-label">Solution</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="search" formControlName="commercialName" id="search-input" [ngModel]="contract.commercialTechnicalName" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="revalo-capital" class="col-12 col-md-2 col-xl-2 col-form-label">Capital garanti à ce jour (€)</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="number" [ngModel]="revalo"  id="revalo-capital"  formControlName="revalo" disabled >
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="!isPrimeUnique()">
+                <label for="time-input" class="col-12 col-md-2 col-xl-2 col-form-label">Prochain Prélèvement</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="text" [ngModel]="contract.dueDate"  id="retrait-input" formControlName="dueDate" disabled>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="!isPrimeUnique()">
+                <label for="time-input" class="col-12 col-md-2 col-xl-2 col-form-label">Montant du Prélèvement (€)</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="text" [ngModel]="contract.tarif"  id="tarif-input" formControlName="tarif" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="date-input" class="col-12 col-md-2 col-xl-2 col-form-label">Date de souscription</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control"  formControlName="registrationDate" [ngModel]="contract.registrationDate" id="date-input" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="url-input" class="col-12 col-md-2 col-xl-2 col-form-label">Assistance</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" formControlName="assistance"   [ngModel]="translateBoolean(contract.hasAssistance)" id="url-input" disabled>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="!isPrimeUnique()">
+                <label for="tel-fractionnement" class="col-12 col-md-2 col-xl-2 col-form-label">Fractionnement</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="fractionnement" formControlName="splittingName"   [ngModel]="contract.splittingName" id="tel-fractionnement" disabled>
+                </div>
+            </div>
+            
+            <div class="form-group row" *ngIf="!(isPrimeUnique() || isPrimeViagere())">
+                <label for="number-input" class="col-12 col-md-2 col-xl-2 col-form-label">Durée de paiement</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="number" type="paymentDuration" formControlName="paymentDuration"  id="number-input" [ngModel]="contract.paymentDuration" disabled>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="initial-capital" class="col-12 col-md-2 col-xl-2 col-form-label">Capital initial (€)</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="number" [ngModel]="contract.initialCapital"  id="initial-capital"  formControlName="initialCapital" disabled >
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <label for="month-input" class="col-12 col-md-2 col-xl-2 col-form-label">Acompte</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="number" [ngModel]="contract.deposit"  id="deposit-input" formControlName="deposit"  disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="week-input" class="col-12 col-md-2 col-xl-2 col-form-label">Est un avenant ?</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="text" [ngModel]="translateBoolean(contract.isEndorsement)" id="avenant-input" formControlName="isEndorsement" disabled>
+                </div>
+            </div>
+         
+          
+            
+        </form>
+    </div>
+</div>
+</div>

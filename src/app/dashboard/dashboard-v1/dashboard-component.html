@@ -1,0 +1,44 @@
+<div class="pad-wrap">
+  <div class="chk-block author-card rounded-0 bg-light p-4 mb-4 card">
+    <div class=" media">
+       <img src="assets/img/logo_mco.png" class="d-flex mr-3 img-fluid rounded-circle align-self-center" alt="author thumb" width="120" height="120" />
+       <div class="media-body">        
+          <div class="row">
+             <div class="mb-4">
+                    <h2 class="font-normal">{{name}}</h2>
+              J'ai souscrit mon contrat obsèques auprès de <span class="text-primary">{{funeralHome.socialName}} </span> 
+              situé au  <span class="text-primary">{{funeralHome.address}} </span>,<span class="text-success">{{funeralHome.postalCode}} {{funeralHome.city}}</span> 
+              et joignable au <span class="text-primary">{{funeralHome.phone}}</span>. 
+              <br>En cas de décès à plus de 50Km, veuillez contacter le <span class="text-warning">01.42.99.82.78</span>
+              en indiquant le numéro de la convention d'assistance suivant  <span class="text-info">"C55U"</span>
+              <br><span class="text-danger">ATTENTION : "Demander un numéro de prise en charge avant toute intervention"</span>
+             </div>   
+             <div class="mb-4">
+                    <a (click)="open(popupChoice)"><i class="fa fa-envelope-open-o "><span class="text-primary"><strong> Envoyer ces informations à un proche</strong></span> </i></a>
+                </div>          
+          </div>
+        
+      
+       </div>
+       
+       </div>
+    </div>
+    <ng-template #popupChoice let-c="close" let-d="dismiss">
+         <div class="modal-header px-4">
+             <h4 class="modal-title error text-center">
+                 <span><strong></strong>
+                  <br><label for="email">Veuillez renseigner l'email du destinataire</label>  <input type="email" [(ngModel)]="destinataireEmail" id="email">     
+                 </span>
+
+             </h4>
+
+         </div>
+
+         <div class="modal-footer">
+             <button type="button" class="btn btn-raised btn-primary  text-left" (click)="send()">Envoyer la carte</button>
+
+             <button type="button" class="btn btn-raised btn-primary  text-right" (click)="c('closed')">Annuler</button>
+
+         </div>
+     </ng-template>
+</div>

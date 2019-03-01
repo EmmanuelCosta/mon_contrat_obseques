@@ -1,0 +1,27 @@
+<div class="pad-wrap">
+  <div class="chk-block">
+   
+    <div class="chk-block-content">
+        <form [formGroup]="profilForm">
+            <div class="form-group row">
+                <label for="oldPassword-input" class="col-12 col-md-2 col-xl-2 col-form-label">Ancien mot de passe</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="password"  formControlName="oldPassword" [(ngModel)]="oldPassword" id="oldPassword-input"  >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="newPassword-input" class="col-12 col-md-2 col-xl-2 col-form-label">Nouveau mot de passe</label>
+                <div class="col-12 col-md-10 col-xl-10">
+                    <input class="form-control" type="password" formControlName="newPassword" id="newPassword-input" [(ngModel)]="newPassword" >
+                </div>
+            </div>
+            
+            <div>
+                <button   type="button"  class="btn btn-primary btn-pill btn-block"  (click)="resetPassword()"> Reinitialiser mot de passe</button>
+            </div>
+          
+            
+        </form>
+    </div>
+</div>
+</div>
