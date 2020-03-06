@@ -220,5 +220,21 @@ export class AppService {
             }));
     }
 
+    havingLIA(): Observable<boolean> {
+
+        let requestOptions: Object = {
+            /* other options here */
+
+            observe: 'response'
+        }
+        const jwtHelper = new JwtHelperService();
+
+
+        return this.http.post<HttpResponse<Object>>(this.basePath + "/api/mobile/user/havingLIA",
+            requestOptions)
+            .pipe(map((response: Response) => {
+                return response;
+            }));
+    }
 
 }

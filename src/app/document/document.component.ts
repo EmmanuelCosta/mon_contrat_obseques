@@ -4,6 +4,8 @@ import { fadeInAnimation } from "../core/route-animation/route.animation";
 import * as Ps from 'perfect-scrollbar';
 import { AppService } from 'app/services';
 import { first } from 'rxjs/operators';
+import { Contract } from 'app/models/models';
+
 
 @Component({
   selector: 'ms-document',
@@ -18,6 +20,9 @@ import { first } from 'rxjs/operators';
 export class DocumentComponent implements OnInit {
 
   code: string;
+  contract: Contract;
+  displayLIA:boolean;
+
   constructor(private pageTitleService: PageTitleService,
     private appService: AppService) {
 
@@ -35,8 +40,47 @@ export class DocumentComponent implements OnInit {
           console.log("error " + error)
 
         });
+        this.displayLIA=false;
+      //  this.getContract();
+        this.havingLIA();
   }
 
+  getContract(){
+    this.appService.getContract()
+      .pipe(first())
+      .subscribe(
+        contract => {
+          this.contract = contract;
+     
+
+         // console.log("code contract " + this.contract.commercialTechnicalName)
+
+          //console.log("code contract " + this.contract)
+        },
+        error => {
+          console.log("error " + error)
+
+        });
+  }
+
+
+  havingLIA(){
+    this.appService.havingLIA()
+      .pipe(first())
+      .subscribe(
+        displayLIA => {
+          this.displayLIA = displayLIA;
+     
+
+         // console.log("code contract " + this.contract.commercialTechnicalName)
+
+          //console.log("code contract " + this.contract)
+        },
+        error => {
+          console.log("error " + error)
+
+        });
+  }
   downloadFile(templateType: number) {
     let code = this.code
     this.appService.downloadFile(templateType, code)
@@ -74,4 +118,7 @@ export class DocumentComponent implements OnInit {
           console.log('==> ' + error);
         });
   }
+
+
+ 
 }
