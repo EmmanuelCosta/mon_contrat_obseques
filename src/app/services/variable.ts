@@ -5,6 +5,6 @@ let PROD2 = "https://dame-prevoyance.fr:8443";
 let RECETTE="http://217.182.175.9:8080";
 let DEMO="http://149.202.207.64:8080";
 
-export const BASE_PATH =DEV;
+export const BASE_PATH =PROD2;
 export const TOKEN_HEADER="Authorization";
 export const TOKEN = "Bearer";

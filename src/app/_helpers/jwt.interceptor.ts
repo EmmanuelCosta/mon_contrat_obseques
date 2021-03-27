@@ -10,9 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
         // add authorization header with jwt token if available
 
         var c = new  Common();
-        console.log("jwt intercet call")
         let currentUser = localStorage.getItem(c.getTokenName());
-        console.log("jwt intercet call ===>>> "+currentUser)
         if (currentUser ) {
             request = request.clone({
                 setHeaders: { 

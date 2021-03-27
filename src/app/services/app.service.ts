@@ -31,7 +31,6 @@ export class AppService {
 
             observe: 'response'
         }
-        const jwtHelper = new JwtHelperService();
 
 
         return this.http.post<HttpResponse<Object>>(this.basePath + "/api/mobile/user/contract",
@@ -105,7 +104,6 @@ export class AppService {
             { headers: headers, responseType: 'blob' as 'json' })
 
             .pipe(map((response: Response) => {
-                console.log("tttttttttttttttttttttt")
 
 
                 var ortDoc = new models.OrtDocument();
@@ -236,5 +234,53 @@ export class AppService {
                 return response;
             }));
     }
+
+    public getDocumentHistoryList(fileType: number, code: string): Observable<models.OrtDocument []> {
+        var c = new Common();
+        let currentUser = localStorage.getItem(c.getTokenName());
+        let params = new HttpParams();
+        let headers = new Headers(this.defaultHeaders.toJSON());
+
+
+        headers.set('Content-Type', 'application/json');
+        headers.set('Authorization', `Bearer ${currentUser}`)
+        params.append('fileType', fileType.toString());
+        params.append('contractCode', code);
+
+        return this.http.get<HttpResponse<Object>>(this.basePath + "/api/download/docHistoryList",
+        { 
+            params: {
+                fileType: fileType.toString(),
+                contractCode: code
+            }
+         })
+        .pipe(map((response: Response) => {
+            return response;
+        }));
+    }
+
+    public downloadHistoryFile(code: string) {
+        var c = new Common();
+        let currentUser = localStorage.getItem(c.getTokenName());
+        let httpHeaders = new Headers().set('Authorization', `Bearer ${currentUser}`)
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON());
+
+
+        headers.set('Content-Type', 'application/json');
+        headers.set('Authorization', `Bearer ${currentUser}`)
+        queryParameters.set('code', code);
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            responseType: ResponseContentType.Blob,
+            search: queryParameters
+        });
+
+        return this.http2.request(this.basePath + "/api/download/historyFile", requestOptions)
+
+    }
+
 
 }

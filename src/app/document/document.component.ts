@@ -4,7 +4,8 @@ import { fadeInAnimation } from "../core/route-animation/route.animation";
 import * as Ps from 'perfect-scrollbar';
 import { AppService } from 'app/services';
 import { first } from 'rxjs/operators';
-import { Contract } from 'app/models/models';
+import { Contract , OrtDocument} from 'app/models/models';
+import { Models } from 'nvd3';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class DocumentComponent implements OnInit {
   code: string;
   contract: Contract;
   displayLIA:boolean;
+  archivesLIA: OrtDocument[] = [];
 
   constructor(private pageTitleService: PageTitleService,
     private appService: AppService) {
@@ -35,6 +37,8 @@ export class DocumentComponent implements OnInit {
       .subscribe(
         contract => {
           this.code = contract.code;
+          this.getDocumentHistoryList();
+          
         },
         error => {
           console.log("error " + error)
@@ -86,7 +90,7 @@ export class DocumentComponent implements OnInit {
     this.appService.downloadFile(templateType, code)
       .pipe(first())
       .subscribe(data => {
-        console.log(" -- -- " + data.blob)
+      
         this.appService.saveFile(data.blob, data.name);
       },
         error => {
@@ -100,7 +104,6 @@ export class DocumentComponent implements OnInit {
     this.appService.downloadResource(templateType, code)
       //  .pipe(first())
       .subscribe(data => {
-        console.log(" -- -- " + data.blob())
         let filename = '';
         var headers = data.headers
         var disposition = headers.get('Content-Disposition');
@@ -119,6 +122,39 @@ export class DocumentComponent implements OnInit {
         });
   }
 
+  getDocumentHistoryList(){
+    this.appService
+    .getDocumentHistoryList(41,this.code)
+    .pipe(first())
+      .subscribe(data => {
+        
+          this.archivesLIA = data;
+      });
+
+  }
+
+  downloadHistoryFile(fileCode: string) {
+
+    this.appService.downloadHistoryFile( fileCode)
+      //  .pipe(first())
+      .subscribe(data => {
+        let filename = '';
+        var headers = data.headers
+        var disposition = headers.get('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+        let file = new Blob([data.blob()], { type: 'application/pdf' })
+        this.appService.saveFile(file, filename);
+      },
+        error => {
+          console.log('==> ' + error);
+        });
+  }
 
  
 }
